@@ -149,7 +149,7 @@ Create Docker-Compose file
    version: "3.8"
    services:
      web:
-       build: web
+       image: web
        ports:
        - "8080:8080"
        environment:
