@@ -2,6 +2,36 @@
 
 In this repository, we gonna run a Books service app. Books service app consists of web (ExpressJS) and database (MongoDB) services.
 
+## Prepare environment
+
+1. Install docker.
+
+   ```
+   sudo yum update -y
+   sudo amazon-linux-extras install docker
+   sudo service docker start
+   sudo usermod -a -G docker ec2-user
+   ```
+
+1. Install docker-compose
+
+   ```
+   sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+   sudo chmod +x /usr/local/bin/docker-compose
+   ```
+
+1. Install git.
+
+   ```
+   sudo yum install git -y
+   ```
+
+1. Clone the project.
+   ```
+   git clone https://github.com/fpiyapol/cie-docker-lab.git
+   ```
+
 ## Create Docker file
 
 1. Create `Dockerfile` for a web service with below content.
@@ -118,14 +148,14 @@ Create Docker-Compose file
    ```
    version: "3.8"
    services:
-   books:
-       build: .
+     web:
+       build: web
        ports:
        - "8080:8080"
        environment:
-       SERVICE_VERSION: v2
-       MONGODB_URL: mongodb://mongodb:27017/books
-   mongodb:
+         SERVICE_VERSION: v2
+         MONGODB_URL: mongodb://mongodb:27017/books
+     mongodb:
        image: bitnami/mongodb:4.2.10-debian-10-r26
        ports:
        - "27017:27017"
@@ -136,9 +166,8 @@ Create Docker-Compose file
 1. Run docker-compose.
 
    ```
-   docker rm -f web
-   docker rm -f mongodb
+   docker rm -f $(docker ps -aq)
    docker-compose up -d
    ```
 
-1. Test book service.
+1. Test web service.
