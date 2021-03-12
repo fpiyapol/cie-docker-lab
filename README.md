@@ -1,8 +1,8 @@
 # Docker lab
 
-In this repository, we gonna run a Books service app. Books service app consists of web (ExpressJS) and database (MongoDB) services.
+In this lab, we going to run a Books service app. Books service app consists of web (ExpressJS) and database (MongoDB) services.
 
-## Prepare environment
+## Prerequisite
 
 1. Install docker.
 
@@ -12,6 +12,8 @@ In this repository, we gonna run a Books service app. Books service app consists
    sudo service docker start
    sudo usermod -a -G docker ec2-user
    ```
+
+   > After installing docker, closing the current SSH session and reconnecting.
 
 1. Install docker-compose
 
@@ -33,6 +35,12 @@ In this repository, we gonna run a Books service app. Books service app consists
    ```
 
 ## Create Docker file
+
+1. Change directory to `cie-docker-lab`.
+
+   ```
+   cd cie-docker-lab 
+   ```
 
 1. Create `Dockerfile` for a web service with below content.
 
@@ -89,7 +97,9 @@ In this repository, we gonna run a Books service app. Books service app consists
    ]
    ```
 
-## Run Mongodb Database
+   > Please make sure firewall allows connection on port 8080 and the web service container is running.
+
+## Run MongoDB Database Service
 
 1. Issue following command.
 
@@ -124,7 +134,7 @@ In this repository, we gonna run a Books service app. Books service app consists
    -e SERVICE_VERSION=v2 -e 'MONGODB_URL=mongodb://mongodb:27017/books' web
    ```
 
-   > Book sevice use `SERVICE_VERSION` to toggle version and use external database.
+   > Book service app uses the `SERVICE_VERSION` variable to toggle version to use an external database.
 
 1. Test web service. Now you should see new books information.
 
@@ -166,7 +176,10 @@ Create Docker-Compose file
 1. Run docker-compose.
 
    ```
+   # delete all containers
    docker rm -f $(docker ps -aq)
+
+   # run docker compose
    docker-compose up -d
    ```
 
