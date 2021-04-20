@@ -1,0 +1,38 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "book-service",
+      "image": "469123920517.dkr.ecr.ap-southeast-1.amazonaws.com/book-service",
+      "essential": true,
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "containerPort": 8080
+        }
+      ]
+    },
+    {
+      "name": "check-service",
+      "image": "469123920517.dkr.ecr.ap-southeast-1.amazonaws.com/check-service",
+      "essential": true,
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 9090,
+          "containerPort": 9090
+        }
+      ],
+      "links": [
+        "book-service"
+      ],
+      "environment": [
+        {
+          "name": "BOOK_URL",
+          "value": "http://book-service:8080"
+        }
+      ]
+    }
+  ]
+}
